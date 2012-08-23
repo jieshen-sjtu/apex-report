@@ -1,0 +1,13 @@
+听懂的：
+
+论文的任务：从数据库中选出duplicate images
+应用前景：从数据库中去除一些相近图片、检测版权
+使用的算法：一种基于PCA的算法
+算法的评价指标：precision尽可能高、recall尽可能稠密
+参照线：LSH、PCA
+
+
+没懂的：
+图片的query怎么跟编码联系的
+MP算法
+vote系统是怎么improve performance的

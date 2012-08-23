@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=4.00cm, right=4.00cm, top=5.00cm, bottom=5.00cm]{geometry}
+\author{Shen Jie}
+\title{Summary of Structured Learning}
+\begin{document}
+\maketitle
+\section{Abstract}
+\begin{itemize}
+\item Focus: deal with \emph{complex outputs}, \emph{i.e.}, trees, graphs, instead of
+powerful input representation
+\item How to accomplish this?\\
+\quad\\
+$\Longrightarrow$ maximum-margin formulation(SVM)
+\end{itemize}
+\section{Introduction}
+\begin{itemize}
+\item Task: learning a mapping from input vectors $x \in \mathcal{X}$ to
+response variables $y \in \mathcal{Y}$.\\
+\quad\\
+$\Longrightarrow$ Note: $y$ can be a scalar or \emph{structured object}
+\item Approach: specifying discriminant functions to exploit
+the structure and dependencies with $\mathcal{Y}$, meanwhile
+provide an efficient algorithm to deal with very large output
+spaces.\\
+\quad\\
+$\Longrightarrow$ Key: dealing with more complex output spaces by
+extracting \emph{combined features} rather than define more complex
+functions
+\end{itemize}
+
+\section{Large Margin Learning with Joint Feature Map}
+\begin{itemize}
+\item Primal problem: learning functions $f:\mathcal{X}\rightarrow
+\mathcal{Y}$ based on training samples.
+\item Transferred problem: learn a \emph{discriminant function}
+\begin{eqnarray*}
+F:\mathcal{X}\times \mathcal{Y} \rightarrow \mathbb{R}\\
+(x,y)\mapsto r
+\end{eqnarray*}
+where a high value of $r$ indicates the hypothesis $y$ is more
+possible to be the actual response.
+\item Suppose we have the discriminant function, then turn back
+to the primal problem, $f$ is
+\begin{eqnarray}
+f(\mathbf{x})=\arg\max_{\mathbf{y}\in \mathcal{Y}}F(\mathbf{x,y}),\\
+f(\mathbf{x;w})=\arg\max_{\mathbf{y}\in \mathcal{Y}}F(\mathbf{x,y;w})
+\end{eqnarray}
+\label{eqn1}
+\item Simplification: assume $F$ be linear in some \emph{combined feature}
+representation
+\[
+F(\mathbf{x,y;w})=\langle \mathbf{w},\Psi(\mathbf{x,y})\rangle
+\]
+Challenges:
+\begin{enumerate}
+\item how to design $\Psi$
+\item how to train \textbf{w}
+\item how to solve the optimal problem(\emph{Equation 2})
+\end{enumerate}
+Notes:
+\begin{enumerate}
+\item the dimension of $\Psi$ should be consistent for all
+pairs $\mathbf{(x,y)}$, since we only train a unique parameter
+vector $\mathbf{w}$
+\item The specific form of $\Psi$ depends on the nature of the problem
+\item The training of \textbf{w} follows a general SVM paradigm(discussed
+in the following paragraph)
+\item $f(\mathbf{x;w})$ can be efficiently computed via the CKY algorithm
+\end{enumerate}
+\end{itemize}
+
+\subsection{Loss Functions and Risk Minimization}
+This subsection seems irrelevant with the following contexts...
+\subsection{Margin Maximization}
+\subsubsection{SEPARABLE CASE}
+Zero training error:
+\[
+\forall i \in \{1,...,n\}:\quad \max_{\mathbf{y}\in\mathcal{Y}\backslash\mathbf{y}_i}
+\{\langle \mathbf{w},\Psi(\mathbf{x}_i,\mathbf{y})\rangle\}\leq
+\langle \mathbf{w},\Psi(\mathbf{x}_i,\mathbf{y}_i)\rangle
+\]
+Rewrite it as a convex quadratic program in standard form
+\begin{eqnarray}
+SVM_0:\qquad \min_{\mathbf{w}}\frac{1}{2}||\mathbf{w}||^2\\
+s.t.\quad \forall i, \forall \mathbf{y}\in \mathcal{Y}:
+\langle\mathbf{w},\delta \Psi(\mathbf{y})\rangle \geq 1
+\end{eqnarray}
+\end{document}
